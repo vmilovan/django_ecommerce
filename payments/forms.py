@@ -33,12 +33,12 @@ class UserForm(CardForm):
     email = forms.EmailField(required=True)
     password = forms.CharField(
         required=True,
-        label=u'Password',
+        label='Password',
         widget=forms.PasswordInput(render_value=False)
     )
     ver_password = forms.CharField(
         required=True,
-        label=u'Verify Password',
+        label='Verify Password',
         widget=forms.PasswordInput(render_value=False)
     )
 
@@ -47,5 +47,5 @@ class UserForm(CardForm):
         password = cleaned_data.get('password')
         ver_password = cleaned_data.get('ver_password')
         if password != ver_password:
-            raise forms.ValidationError(u'Passwords do not match.')
+            raise forms.ValidationError('Passwords do not match.')
         return cleaned_data
