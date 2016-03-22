@@ -15,6 +15,8 @@ STRIPE_PUBLISHABLE = 'pk_test_ilngWVL0wZ1xbb6KaYhvFDAT'
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
+
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
@@ -90,7 +92,7 @@ STATICFILES_DIRS = (os.path.join(SITE_ROOT, 'static'),)
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.
