@@ -3,13 +3,28 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from payments.forms import SigninForm, CardForm, UserForm
-from payments.models import User
+from payments.models import User, UnpaidUsers
 import django_ecommerce.settings as settings
 import stripe
 import datetime
+import socket
 
 
 stripe.api_key = settings.STRIPE_SECRET
+
+
+class Customer(object):
+
+    @classmethod
+    def create(cls, billing_method="subscription", **kwargs):
+        try:
+            if billing_method == "subscription":
+                return stripe.Customer.create(**kwargs)
+            elif billing_method == "one_time":
+                return stripe.Charge.create(**kwargs)
+        except (socket.error, stripe.APIConnectionError,
+                stripe.InvalidRequestError):
+            return None
 
 
 def soon():
@@ -56,7 +71,7 @@ def register(request):
     if request.method == 'POST':
         form = UserForm(request.POST)
         if form.is_valid():
-            customer = stripe.Customer.create(
+            customer = Customer.create(
                 email=form.cleaned_data['email'],
                 description=form.cleaned_data['name'],
                 card=form.cleaned_data['stripe_token'],
@@ -69,9 +84,19 @@ def register(request):
                                    cd['email'],
                                    cd['password'],
                                    cd['last_4_digits'],
-                                   customer.id)
+                                   stripe_id='')
+
+                if customer:
+                    user.stripe_id = customer.id
+                    user.save()
+                else:
+                    UnpaidUsers(email=cd['email']).save()
+
             except IntegrityError:
-                form.add_error(user.email + ' is already a member')
+                import traceback
+                form.add_error(user.email + ' is already a member' +
+                               traceback.format_exc())
+                user = None
             else:
                 request.session['user'] = user.pk
                 return HttpResponseRedirect('/')
