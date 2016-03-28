@@ -3,15 +3,14 @@ from django.core.exceptions import NON_FIELD_ERRORS
 
 
 class PaymentForm(forms.Form):
-    def add_error(self, field, error):
-        self._errors[NON_FIELD_ERRORS] = self.error_class([error])
+    def addError(self, message):
+        self._errors[NON_FIELD_ERRORS] = self.error_class([message])
 
 
 class SigninForm(PaymentForm):
     email = forms.EmailField(required=True)
     password = forms.CharField(
-        required=True,
-        widget=forms.PasswordInput(render_value=False)
+        required=True, widget=forms.PasswordInput(render_value=False)
     )
 
 
@@ -22,10 +21,7 @@ class CardForm(PaymentForm):
         max_length=4,
         widget=forms.HiddenInput()
     )
-    stripe_token = forms.CharField(
-        required=True,
-        widget=forms.HiddenInput()
-    )
+    stripe_token = forms.CharField(required=True, widget=forms.HiddenInput())
 
 
 class UserForm(CardForm):
@@ -33,12 +29,12 @@ class UserForm(CardForm):
     email = forms.EmailField(required=True)
     password = forms.CharField(
         required=True,
-        label='Password',
+        label=('Password'),
         widget=forms.PasswordInput(render_value=False)
     )
     ver_password = forms.CharField(
         required=True,
-        label='Verify Password',
+        label=('Verify Password'),
         widget=forms.PasswordInput(render_value=False)
     )
 
@@ -47,5 +43,5 @@ class UserForm(CardForm):
         password = cleaned_data.get('password')
         ver_password = cleaned_data.get('ver_password')
         if password != ver_password:
-            raise forms.ValidationError('Passwords do not match.')
+            raise forms.ValidationError('Passwords do not match')
         return cleaned_data

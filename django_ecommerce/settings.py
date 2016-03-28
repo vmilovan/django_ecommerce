@@ -1,20 +1,13 @@
 # Django settings for django_ecommerce project.
 
 import os
-import sys
-
-
-PROJECT_ROOT = os.path.realpath(os.path.dirname(__file__))
-SITE_ROOT = os.path.dirname(PROJECT_ROOT)
-
-
-STRIPE_SECRET = 'sk_test_XStHAmQqfImAxmBriY0doQdh'
-STRIPE_PUBLISHABLE = 'pk_test_ilngWVL0wZ1xbb6KaYhvFDAT'
-
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-
+PROJECT_ROOT = os.path.realpath(os.path.dirname(__file__))
+SITE_ROOT = os.path.dirname(PROJECT_ROOT)
+STRIPE_SECRET = 'sk_test_4QBquf6d5EzsnJC1fTI2GBGm'
+STRIPE_PUBLISHABLE = 'pk_test_4QBqqGvCk9gaNn3pl1cwxcAS'
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 ADMINS = (
@@ -33,9 +26,6 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
-if 'test' in sys.argv or 'test_coverage' in sys.argv:
-    DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
@@ -91,17 +81,17 @@ STATICFILES_DIRS = (os.path.join(SITE_ROOT, 'static'),)
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
+#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'nb^56_^^l(bf8dg*4golm=!zk94vs_=f(^kg2!6+w)n1-n84p4'
+SECRET_KEY = '!(1ty%c5a)0l0(p)kxl2igmbobx_64hqh&tv1=+s9@!@zez4o^'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-    # 'django.template.loaders.eggs.Loader',
+#     'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -120,12 +110,7 @@ ROOT_URLCONF = 'django_ecommerce.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'django_ecommerce.wsgi.application'
 
-TEMPLATE_DIRS = (
-    os.path.join(SITE_ROOT, 'templates'),
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-)
+TEMPLATE_DIRS = (os.path.join(SITE_ROOT, 'templates'),)
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -134,12 +119,14 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.admin',
     'main',
+    'django.contrib.admin',
     'django.contrib.flatpages',
     'contact',
     'payments',
-    # 'django.contrib.admindocs',
+    'embed_video',
+    'rest_framework',
+    'djangular_polls',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'

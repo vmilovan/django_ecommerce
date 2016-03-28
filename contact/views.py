@@ -1,12 +1,10 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from django.template import RequestContext
-from django.shortcuts import render_to_response
+from django.template import RequestContext, loader
 from .forms import ContactView
 from django.contrib import messages
 
 
 def contact(request):
-    user = None
     if request.method == 'POST':
         form = ContactView(request.POST)
         if form.is_valid():
@@ -18,10 +16,6 @@ def contact(request):
             return HttpResponseRedirect('/')
     else:
         form = ContactView()
-    return render_to_response(
-        'contact.html',
-        {'form': form,
-         'user': user,
-        },
-        context_instance=RequestContext(request)
-    )
+    t = loader.get_template('contact/contact.html')
+    c = RequestContext(request, {'form': form, })
+    return HttpResponse(t.render(c))

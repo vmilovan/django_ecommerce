@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="dataSourceStorageLocal">
-    <data-source name="Django default" uuid="a75657a9-51b4-4597-8e92-1d7c80727522">
-      <auth-required>false</auth-required>
+    <data-source name="Django default driver - jdbc:postgresql://localhost/django_db" uuid="75daf4b8-bf52-4743-9510-6a045fc1086a">
+      <secret-storage>master_key</secret-storage>
+      <user-name>djangousr</user-name>
+      <schema-pattern>django_db.pg_catalog django_db.public</schema-pattern>
+      <default-schemas>django_db.public</default-schemas>
+    </data-source>
+    <data-source name="Django default" uuid="af8e32cf-8942-444c-907d-4aa8d1a2ee79">
+      <user-name>djangousr</user-name>
+      <user-password>df9b</user-password>
+      <schema-pattern>django_db.pg_catalog django_db.public</schema-pattern>
+      <default-schemas>django_db.public</default-schemas>
     </data-source>
   </component>
 </project>
